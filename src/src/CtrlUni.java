@@ -22,5 +22,5 @@ public class CtrlUni {
 		RegsFlags.setReg(RegsFlags.MAR,  Util.getADR(reg));
 		RegsFlags.setReg(RegsFlags.PC, RegsFlags.getReg(RegsFlags.PC) + 1);
 	}
-	
+	//teste
 }
