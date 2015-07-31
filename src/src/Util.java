@@ -8,7 +8,7 @@ public class Util {
 		return (ir == 10 ) || ( ir == 9 ) || ( ir == 33 )
 				           || (( ir >= 1 )&& ( ir<=4 ) );  
 	}
-	
+//teste	
 	public boolean uncondBranch(int ir){
 		return ( ( ir == 13 ) || ( ir == 14) );
 	}
