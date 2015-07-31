@@ -1,5 +1,6 @@
 package src;
 
+// Completa
 public class RegsFlags {
 	public static final int AC  = 0;
 	public static final int IBR = 1;
