@@ -10,7 +10,7 @@ public class Ccpu {
 		int line = 0;
 		//if(x!= 0)
 		//	printHelp();
-		int pc;
+		int pc = -1; // alterado
 		if (x == 2){
 			System.out.print("Stop where PC > ");
 			pc = scan.nextInt();
@@ -25,7 +25,7 @@ public class Ccpu {
 					line++;
 				}
 			}
-			ir = instCycle();
+			ir = (int)CtrlUni.instCycle(); // cast da gambi
 			Util.instType(ir);
 			if(line == 2){
 				line = 0;
