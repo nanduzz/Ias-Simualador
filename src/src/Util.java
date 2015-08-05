@@ -2,31 +2,32 @@ package src;
 
 public class Util {
 	
-	public static int type[];
+	public static int type[] = {0,0,0,0,0};
 	
-	public static boolean dataTransfer(int ir){
+	public static boolean dataTransfer(long ir){
 		return (ir == 10 ) || ( ir == 9 ) || ( ir == 33 )
-				           || (( ir >= 1 )&& ( ir<=4 ) );  
+				           || (( ir >= 1 )&& ( ir <= 4 ) );  
 	}
 //teste	
-	public static boolean uncondBranch(int ir){
+	public static boolean uncondBranch(long ir){
 		return ( ( ir == 13 ) || ( ir == 14) );
 	}
 	
-	public static boolean condBranch(int ir){
+	public static boolean condBranch(long ir){
 		return ( ( ir == 15 ) || ( ir == 16 ) );
 	}
 	
-	public static boolean arithmetic (int ir){
-		return ( ( ir >= 5 ) && ( ir<=8 ) ) || ( ir == 11 ) || ( ir == 12)
+	public static boolean arithmetic (long ir){
+		return ( ( ir >= 5 ) && ( ir <= 8 ) ) || ( ir == 11 ) || ( ir == 12)
 				|| ( ir == 20 ) || ( ir == 21 );
 	}
 	
-	public static boolean addressModify(int ir){
+	public static boolean addressModify(long ir){
 		return ( ( ir == 18 ) || (ir == 19) );
 	}
 	
-	public static void instType(int ir){
+	public static void instType(long ir){
+		System.out.println(ir);
 		int t = -1;
 		if(dataTransfer(ir)){
 			t = 0;
@@ -46,10 +47,12 @@ public class Util {
 	}
 	
 	public static long getOPL(long word){
+		System.out.println(((word & Base.OPR) >> 32) + " L ");
 		return (word & Base.OPL) >> 32;
 	}
 	
 	public static long getOPR(long word){
+		System.out.println(((word & Base.OPR) >> 12) + " R ");
 		return (word & Base.OPR) >> 12;
 	}
 	
@@ -123,7 +126,7 @@ public class Util {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(Base.LCLEAN);
+	//	System.out.println(Base.LCLEAN);
 	}
 	
 	public static void printPC(){

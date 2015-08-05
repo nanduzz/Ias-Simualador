@@ -4,8 +4,8 @@ package src;
 public class CtrlUni {
 	
 	public static void fetch(){
-		long bus;
-		RegsFlags.setReg(RegsFlags.MAR, RegsFlags.getReg(RegsFlags.MAR));
+		long bus = 0;
+		RegsFlags.setReg(RegsFlags.MAR, RegsFlags.getReg(RegsFlags.PC));
 		bus = Mem.readMEM(RegsFlags.MAR);
 		RegsFlags.setReg(RegsFlags.MBR, bus);
 	}

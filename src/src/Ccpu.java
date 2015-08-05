@@ -3,36 +3,43 @@ package src;
 import java.util.Scanner;
 
 public class Ccpu {
-	Scanner scan = new Scanner(System.in);
-	public void cpu(int x, int max, int ma, int mb){
+	
+	public static void cpu(int x, int max, int ma, int mb){
+		Scanner scan = new Scanner(System.in);
 		char c;
-		int ir;
+		long ir;
 		int line = 0;
 		//if(x!= 0)
 		//	printHelp();
 		int pc = -1; // alterado
 		if (x == 2){
-			System.out.print("Stop where PC > ");
+			//System.out.print("Stop where PC > ");
 			pc = scan.nextInt();
 			//TODO falta o getCHAR()
+			//System.out.println("zx=2");
 		}
 		while(RegsFlags.isOFF(RegsFlags.END_FLAG)){
 			if(x == 1){
 				Util.cpuStatus(max, ma,mb);
+				//System.out.println("x=1");
 			}else if (x == 2){
 				if(pc == RegsFlags.getReg(RegsFlags.PC)){
 					Util.cpuStatus(max, ma, mb);
 					line++;
+					//System.out.println("x=2 dentro do if");
 				}
+				//System.out.println("x=2 dnv");
 			}
-			ir = (int)CtrlUni.instCycle(); // cast da gambi
+			ir = CtrlUni.instCycle(); // cast da gambi
 			Util.instType(ir);
 			if(line == 2){
 				line = 0;
 				System.out.print("Stop where pc >");
 				pc = scan.nextInt();
 				// TODO falta o getCHAR()
+				
 			}
+
 		}
 		if(x == 0){
 			Util.printfInstTypesQtts();
