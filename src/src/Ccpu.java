@@ -21,15 +21,16 @@ public class Ccpu {
 		while(RegsFlags.isOFF(RegsFlags.END_FLAG)){
 			if(x == 1){
 				Util.cpuStatus(max, ma,mb);
-				//System.out.println("x=1");
+				System.out.println("x=1");
 			}else if (x == 2){
 				if(pc == RegsFlags.getReg(RegsFlags.PC)){
 					Util.cpuStatus(max, ma, mb);
 					line++;
-					//System.out.println("x=2 dentro do if");
+					System.out.println("x=2 dentro do if");
 				}
-				//System.out.println("x=2 dnv");
+				System.out.println("x=2 dnv");
 			}
+			System.out.println("teste");
 			ir = CtrlUni.instCycle(); // cast da gambi
 			Util.instType(ir);
 			if(line == 2){

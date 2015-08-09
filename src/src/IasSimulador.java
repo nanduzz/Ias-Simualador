@@ -29,8 +29,9 @@ public class IasSimulador {
 		if(linhas.length > 0){	
 			Mem.loadMEM(linhas);
 		}
-		//Util.printfMEM(200, 0, 200);
+		Util.printfMEM(200, 0, 200);
 		Ccpu.cpu(0, 200, 0, 10);
 		System.out.println("fim");
+
 	}
 }
