@@ -20,13 +20,14 @@ public class Mem {
 		for (String linha : linhas){
 			if(linha != null){
 				long valor = Long.parseLong(linha, 16);
-				writeMEM(i, valor, valor);
+				writeMEM(i, valor, 0);
 				
 				//System.out.println(valor);
 			}
 			i++;
 		}
 	}
+	
 	public static long readMEM(long pos){
 		int p = (int) pos; // gambi
 		return mem[p];
@@ -34,6 +35,7 @@ public class Mem {
 	
 	public static void writeMEM(long pos, long bus, long mask){
 		int p = (int) pos; // <= gambiarra
+		System.out.println("POS MEM :" + p);
 		mem[p] = (mask & mem[p]) | bus;
 	}
 }

@@ -4,24 +4,26 @@ public class Util {
 	
 	public static int type[] = {0,0,0,0,0};
 	
+	//Data Transfer
 	public static boolean dataTransfer(long ir){
 		return (ir == 10 ) || ( ir == 9 ) || ( ir == 33 )
-				           || (( ir >= 1 )&& ( ir <= 4 ) );  
+				           || (( ir == 1 ) || ( ir == 4 ) );  
 	}
-//teste	
+	//Salto incondicional	
 	public static boolean uncondBranch(long ir){
 		return ( ( ir == 13 ) || ( ir == 14) );
 	}
-	
+	//salto condicional
 	public static boolean condBranch(long ir){
 		return ( ( ir == 15 ) || ( ir == 16 ) );
 	}
-	
+	//aritimetica
 	public static boolean arithmetic (long ir){
 		return ( ( ir >= 5 ) && ( ir <= 8 ) ) || ( ir == 11 ) || ( ir == 12)
 				|| ( ir == 20 ) || ( ir == 21 );
 	}
 	
+	//doficicação de endereco
 	public static boolean addressModify(long ir){
 		return ( ( ir == 18 ) || (ir == 19) );
 	}

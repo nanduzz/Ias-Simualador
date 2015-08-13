@@ -26,16 +26,18 @@ public class CtrlUni {
 	//teste
 	
 	public static int decodeOp(long ir){
-	    int op = -1;
+	    int op = 0;
 	    if(ir == 1){
 	        op = Base.MBR_AC;      
 	    }else if(ir == 2){
 	        op = Base.N_MBR_AC;      
 	    }else if(ir == 3){
 	        op = Base.A_MBR_AC;      
-	    }else if(ir == 4){
-	        op = Base.AN_MBR_AC;      
-	    }else if(ir == 33){
+	    }
+//	    else if(ir == 4){
+//	        op = Base.AN_MBR_AC;      
+//	    }
+	    else if(ir == 33){
 	        op = Base.AC_MBR;
 	    }else if(ir == 18){
 	        op = Base.AC_MBR_L;
@@ -64,6 +66,7 @@ public class CtrlUni {
 	    }else if((ir == 15)||(ir == 16)){
 	        op = Base.AC_MAG;
 	    }
+	    System.out.println("OP:" + op);
 	    return op;
 	}
 	
