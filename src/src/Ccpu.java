@@ -30,7 +30,6 @@ public class Ccpu {
 				}
 				System.out.println("x=2 dnv");
 			}
-			System.out.println("teste");
 			ir = CtrlUni.instCycle(); // cast da gambi
 			Util.instType(ir);
 			if(line == 2){

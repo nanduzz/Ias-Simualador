@@ -6,8 +6,16 @@ public class CtrlUni {
 	public static void fetch(){
 		long bus = 0;
 		RegsFlags.setReg(RegsFlags.MAR, RegsFlags.getReg(RegsFlags.PC));
-		bus = Mem.readMEM(RegsFlags.MAR);
+		bus = Mem.readMEM(RegsFlags.getReg(RegsFlags.MAR));
 		RegsFlags.setReg(RegsFlags.MBR, bus);
+	}
+	
+	// se não funcionar trocar parametro para long
+	public static void getOperands(long mar){
+	    if(RegsFlags.isON(RegsFlags.READMEM_FLAG)){  
+	    	RegsFlags.setReg(RegsFlags.MBR, Mem.readMEM(mar));
+	    	RegsFlags.turnOFF(RegsFlags.READMEM_FLAG);
+	    }        
 	}
 	
 	public static void decodeL(){
@@ -38,6 +46,7 @@ public class CtrlUni {
 //	        op = Base.AN_MBR_AC;      
 //	    }
 	    else if(ir == 33){
+	    	System.out.println("store");
 	        op = Base.AC_MBR;
 	    }else if(ir == 18){
 	        op = Base.AC_MBR_L;
@@ -85,13 +94,7 @@ public class CtrlUni {
 	    }
 	}
 	
-	// se não funcionar trocar parametro para long
-	public static void getOperands(long mar){
-	    if(RegsFlags.isON(RegsFlags.READMEM_FLAG)){  
-	    	RegsFlags.setReg(RegsFlags.MBR, Mem.readMEM(mar));
-	    	RegsFlags.turnOFF(RegsFlags.READMEM_FLAG);
-	    }        
-	}
+
 	
 	public static void execute(long ir){
 		int op = decodeOp(ir);
@@ -102,7 +105,8 @@ public class CtrlUni {
 				RegsFlags.getReg(RegsFlags.MQ)
 				);
 	}
-	public static void branchControl(long ir){
+	
+	public static void branchControl(long ir){	
 		if(ir == 0){
 			RegsFlags.turnON(RegsFlags.END_FLAG);
 		}else if ((ir == 13) || (ir == 14)){
@@ -147,8 +151,8 @@ public class CtrlUni {
 	
 	public static long instCycle(){
 		fetchCycle();
-		memoryAcessControl(RegsFlags.getReg(RegsFlags.IR));
 		getOperands(RegsFlags.getReg(RegsFlags.MAR));
+		memoryAcessControl(RegsFlags.getReg(RegsFlags.IR));
 		execute(RegsFlags.getReg(RegsFlags.IR));
 		branchControl(RegsFlags.getReg(RegsFlags.IR));
 		saveResults(

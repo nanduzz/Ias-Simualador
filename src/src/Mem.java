@@ -11,9 +11,8 @@ public class Mem {
 			size = 1024;
 		}
 		for(int i = 0; i < size; i++){
-			mem[i] = 0l;
+			mem[i] = 0;
 		}
-		
 	}
 	public static void loadMEM(String[] linhas){
 		int i = 0;
@@ -21,8 +20,6 @@ public class Mem {
 			if(linha != null){
 				long valor = Long.parseLong(linha, 16);
 				writeMEM(i, valor, 0);
-				
-				//System.out.println(valor);
 			}
 			i++;
 		}
@@ -35,7 +32,7 @@ public class Mem {
 	
 	public static void writeMEM(long pos, long bus, long mask){
 		int p = (int) pos; // <= gambiarra
-		System.out.println("POS MEM :" + p);
+		//System.out.println("POS MEM :" + p);
 		mem[p] = (mask & mem[p]) | bus;
 	}
 }

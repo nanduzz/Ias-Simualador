@@ -13,7 +13,7 @@ public class IasSimulador {
 		Mem.initMEM(linhas.length);
 		try{
 			ClassLoader classLoader = IasSimulador.class.getClassLoader();
-			FileReader arq = new FileReader(new File(classLoader.getResource("addsub.txt").getFile()));
+			FileReader arq = new FileReader(new File(classLoader.getResource("bubblesort.txt").getFile()));
 			BufferedReader lerArq = new BufferedReader(arq);
 			int i = 0;
 			String linha;
@@ -26,12 +26,13 @@ public class IasSimulador {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		if(linhas.length > 0){	
 			Mem.loadMEM(linhas);
 		}
-		Util.printfMEM(200, 0, 200);
+		
 		Ccpu.cpu(0, 200, 0, 10);
+		Util.printfMEM(200, 0, 200);
 		System.out.println("fim");
-
 	}
 }
