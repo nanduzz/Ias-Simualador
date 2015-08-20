@@ -151,8 +151,8 @@ public class CtrlUni {
 	
 	public static long instCycle(){
 		fetchCycle();
-		getOperands(RegsFlags.getReg(RegsFlags.MAR));
 		memoryAcessControl(RegsFlags.getReg(RegsFlags.IR));
+		getOperands(RegsFlags.getReg(RegsFlags.MAR));
 		execute(RegsFlags.getReg(RegsFlags.IR));
 		branchControl(RegsFlags.getReg(RegsFlags.IR));
 		saveResults(
