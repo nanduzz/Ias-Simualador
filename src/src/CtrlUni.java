@@ -42,9 +42,9 @@ public class CtrlUni {
 	    }else if(ir == 3){
 	        op = Base.A_MBR_AC;      
 	    }
-//	    else if(ir == 4){
-//	        op = Base.AN_MBR_AC;      
-//	    }
+	    else if(ir == 4){
+	    	op = 4; //#Base.AN_MBR_AC;      
+	    }
 	    else if(ir == 33){
 	    	System.out.println("store");
 	        op = Base.AC_MBR;
@@ -72,8 +72,14 @@ public class CtrlUni {
 	        op = Base.LSH;
 	    }else if(ir == 21){
 	        op = Base.RSH;
-	    }else if((ir == 15)||(ir == 16)){
-	        op = Base.AC_MAG;
+	    }else if((ir == 13)){
+	        op = 13;
+	    }else if(ir == 14){
+	        op = 14;
+	    }else if(ir == 15){
+	        op = 13;
+	    }else if(ir == 16){
+	        op = 13;
 	    }
 	    System.out.println("OP:" + op);
 	    return op;
@@ -117,7 +123,7 @@ public class CtrlUni {
 			RegsFlags.setReg(RegsFlags.PC, RegsFlags.getReg(RegsFlags.MAR));
 		}else if ( ir == 15 || ir == 16){
 			if(RegsFlags.getReg(RegsFlags.MBR) == 0){
-				RegsFlags.turnON(RegsFlags.JMPR_FLAG);
+				RegsFlags.turnON(RegsFlags.FETCH_FLAG);
 				if( ir == 16){
 					RegsFlags.turnON(RegsFlags.JMPR_FLAG);
 				}

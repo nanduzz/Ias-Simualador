@@ -25,7 +25,7 @@ public class Base {
 	
 	public static final int AC_MAG    = 13;
   
-	//public static final int AN_MBR_AC = 16; 
+	//public static final int AN_MBR_AC = 4; 
 	
 	public static final long LCLEAN = Long.parseLong("ff000fffff", 16);
 	public static final long RCLEAN = Long.parseLong("fffffff000", 16);
