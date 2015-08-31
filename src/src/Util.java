@@ -122,13 +122,9 @@ public class Util {
 		System.out.println("Memory(" + mo + " : " + mf + " )");
 		for(i = mo; i <= mf; i++){
 			//TODO Entender linha 121 do GIT para colocar aqui em baixo
-			System.out.println("     " + i + ": " + Mem.readMEM(i));
+			System.out.println("     " + i + ": " + Long.toString(Mem.readMEM(i), 16));
 		}
 		printfDelim();
-	}
-	
-	public static void main(String[] args) {
-	//	System.out.println(Base.LCLEAN);
 	}
 	
 	public static void printPC(){
