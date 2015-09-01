@@ -73,7 +73,7 @@ public class Decodificador {
 					continue;
 				}else if(isPalavraEspacial(linha)){
 					System.out.println("palavra especial");
-					palavrasEspeciais.add(new Pair(MemPos, linha.trim()));
+					palavrasEspeciais.add(new Pair(MemPos + 1, linha.trim()));
 					continue;
 				}else{
 					if(modoDados){
