@@ -114,21 +114,31 @@ public class Decodificador {
 		}else if(op.contains("LOAD MQ,")){
 			opH = Long.valueOf("1001", 2);
 		}else if(op.contains("STOR")){
-			opH = Long.valueOf("100001", 2);
-		}else if(op.contains("LOAD")){
+			if(op.contains(":19")){
+				opH = Long.valueOf("10010", 2);
+			}else if( op.contains(":39")){
+				opH = Long.valueOf("10011", 2);
+			}else{
+				opH = Long.valueOf("100001", 2);
+			}
+		}else if(op.contains("LOAD M")){
 			opH = Long.valueOf("1", 2);
 		}else if(op.contains("LOAD -")){
 			opH = Long.valueOf("10", 2);
-		}else if(op.contains("LOAD |")){
+		}else if(op.contains("LOAD |M")){
 			opH = Long.valueOf("11", 2);
-		}else if(op.contains("JUMP")){
-			opH = Long.valueOf("1101", 2);
 		}else if(op.contains("JUMP M")){
-			opH = Long.valueOf("1110", 2);
+			if(op.contains("0:19")){
+				opH = Long.valueOf("1101", 2);
+			}else if( op.contains("20:39")){
+				opH = Long.valueOf("1110", 2);
+			}
 		}else if(op.contains("JUMP+M")){
-			opH = Long.valueOf("1111", 2);
-		}else if(op.contains("JUMP+M")){
-			opH = Long.valueOf("10000", 2);
+			if(op.contains("0:19")){
+				opH = Long.valueOf("1111", 2);
+			}else if( op.contains("20:39")){
+				opH = Long.valueOf("10000", 2);
+			}
 		}else if(op.contains("ADD") && !op.contains("|")){
 			opH = Long.valueOf("101", 2);
 		}else if(op.contains("ADD |")){
@@ -145,10 +155,6 @@ public class Decodificador {
 			opH = Long.valueOf("10100", 2);
 		}else if(op.contains("RSH")){
 			opH = Long.valueOf("10101", 2);
-		}else if(op.contains("STOR")){
-			opH = Long.valueOf("10010", 2);
-		}else if(op.contains("STOR")){
-			opH = Long.valueOf("10011", 2);
 		}
 		return opH;
 	}
@@ -203,7 +209,7 @@ public class Decodificador {
 	
 	public void escreveArquivo(){
 		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("c:\\teste.txt"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/teste.txt"));
 			String linha = "";
 			for(Long l : Mem.mem){
 				bw.append(leftPad(Long.toString(l, 16), 10, '0'));
@@ -214,6 +220,8 @@ public class Decodificador {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		IasSimulador.main(null);
 	}
 	
 	private static String padding(int repeat, char padChar)
@@ -262,6 +270,5 @@ public class Decodificador {
 		public void setPalavra(String palavra){
 			this.palavra = palavra;
 		}
-	
 	}
 }
