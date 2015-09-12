@@ -19,12 +19,6 @@ public class Decodificador {
 	public static int MemPos;
 	private static final int PAD_LIMIT = 8192;
 
-	public void armazenaDados(String linha){
-		
-	}
-	public void armazenaInstrucao(String linha){
-		
-	}
 	public boolean hasOrg(String linha){
 		if(linha.contains(".org")){
 			modoDados = !modoDados;
@@ -37,7 +31,7 @@ public class Decodificador {
 		return linha == null || linha.trim().equals("");
 	}
 	
-	public boolean isPalavraEspacial(String linha){
+	public boolean isPalavraEspacial(String linha){		
 		return linha.contains(":") && !linha.contains("(");
 	}
 	
@@ -64,6 +58,7 @@ public class Decodificador {
 	private void setMemPosOrg(String linha){
 		MemPos = Integer.valueOf(linha.replaceAll("[^0-9]", ""));
 	}
+	
 	public void codifica(){
 		MemPos = 0;
 		for(String linha : this.linhas){
@@ -192,36 +187,32 @@ public class Decodificador {
 		codificaArquivo(filePath);
 		codifica();
 	}
+	
 	public static void main(String[] args) {
-		Decodificador d = new Decodificador();
+		System.out.println("Digite o nome do arquivo :");
 		Scanner scan = new Scanner(System.in);
-		String s;
-//		do{
-//			s = scan.nextLine();
-//			
-//			System.out.println(d.instrucaoToHex(s).toString());
-//			//System.out.println(d.posMemToHex(s).toString());
-//		}while(!s.equals("sair"));
-		d.comeca("bublesort2.ias");
+		String arquivo = scan.nextLine();
+		System.out.println(arquivo);
+		
+		Decodificador d = new Decodificador();
+		d.comeca(arquivo);
+		
 		Util.printfMEM(200, 0, 200);
 		d.escreveArquivo();
+		IasSimulador.execulta();
 	}
 	
 	public void escreveArquivo(){
 		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/teste.txt"));
-			String linha = "";
+			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/ias2.ias"));
 			for(Long l : Mem.mem){
 				bw.append(leftPad(Long.toString(l, 16), 10, '0'));
-				//bw.append(Long.toString(l, 16));
 				bw.newLine();
 			}
 			bw.close();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		
-		IasSimulador.main(null);
 	}
 	
 	private static String padding(int repeat, char padChar)
@@ -243,7 +234,7 @@ public class Decodificador {
 		}
 		int pads = size - str.length();
 		if (pads <= 0) {
-			return str; // returns original String when possible
+			return str; 
 		}
 		if (pads > PAD_LIMIT) {
 			return leftPad(str, size, (char)padChar);

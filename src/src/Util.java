@@ -5,41 +5,40 @@ public class Util {
 	public static int type[] = {0,0,0,0,0};
 	
 	//Data Transfer
-	public static boolean dataTransfer(long ir){
+	public static boolean transferenciaDados(long ir){
 		return (ir == 10 ) || ( ir == 9 ) || ( ir == 33 )
 				           || (( ir == 1 ) || ( ir == 4 ) );  
 	}
 	//Salto incondicional	
-	public static boolean uncondBranch(long ir){
+	public static boolean saltoIncondicional(long ir){
 		return ( ( ir == 13 ) || ( ir == 14) );
 	}
 	//salto condicional
-	public static boolean condBranch(long ir){
+	public static boolean saltoCondicional(long ir){
 		return ( ( ir == 15 ) || ( ir == 16 ) );
 	}
 	//aritimetica
-	public static boolean arithmetic (long ir){
+	public static boolean aritimetica(long ir){
 		return ( ( ir >= 5 ) && ( ir <= 8 ) ) || ( ir == 11 ) || ( ir == 12)
 				|| ( ir == 20 ) || ( ir == 21 );
 	}
 	
 	//doficicação de endereco
-	public static boolean addressModify(long ir){
+	public static boolean modificacaoEndereco(long ir){
 		return ( ( ir == 18 ) || (ir == 19) );
 	}
 	
 	public static void instType(long ir){
-		System.out.println(ir);
 		int t = -1;
-		if(dataTransfer(ir)){
+		if(transferenciaDados(ir)){
 			t = 0;
-		}else if ( uncondBranch(ir) ){
+		}else if ( saltoIncondicional(ir) ){
 			t = 1;
-		}else if ( condBranch(ir) ){
+		}else if ( saltoCondicional(ir) ){
 			t = 2;
-		}else if ( arithmetic(ir) ){
+		}else if ( aritimetica(ir) ){
 			t = 3;
-		}else if ( addressModify(ir) ){
+		}else if ( modificacaoEndereco(ir) ){
 			t = 4;
 		}
 		
@@ -49,12 +48,10 @@ public class Util {
 	}
 	
 	public static long getOPL(long word){
-		System.out.println(((word & Base.OPR) >> 32) + " L ");
 		return (word & Base.OPL) >> 32;
 	}
 	
 	public static long getOPR(long word){
-		System.out.println(((word & Base.OPR) >> 12) + " R ");
 		return (word & Base.OPR) >> 12;
 	}
 	
@@ -101,8 +98,8 @@ public class Util {
 	}
 	
 	public static void printfInstTypesQtts(){
-		String labels[] = {"Data Transfer", "Unconditional Branch", "Conditional Branch", "Arithmetic",
-				"Address Modify"};
+		String labels[] = {"Transferencia de dados", "Salto incondicional", "Salto Condicional", "Aritimetica",
+				"Modificação de endereço"};
 		int i;
 		System.out.println("Quantidade de instruções executadas");
 		for(i = 0; i < 5; i++){
@@ -122,7 +119,12 @@ public class Util {
 		System.out.println("Memory(" + mo + " : " + mf + " )");
 		for(i = mo; i <= mf; i++){
 			//TODO Entender linha 121 do GIT para colocar aqui em baixo
-			System.out.println("     " + i + ": " + Long.toString(Mem.readMEM(i), 16));
+			long mem = Mem.readMEM(i);
+			if( Util.getMAG( mem ) == 1){
+				mem = Util.getNUM(mem);
+				mem = -mem;
+			}
+			System.out.println("     " + i + ": " + Long.toString(mem, 10));
 		}
 		printfDelim();
 	}
@@ -147,7 +149,7 @@ public class Util {
 		}
 		String fLabels[] = {"FETCH_FLAG", "JMPR_FLAG", "END_FLAG", "READMEM_FLAG", "WRITEMEM_FLAG"};
 		for(i = 0; i < fLabels.length; i++){
-			System.out.println("      " + fLabels[i] +": " + RegsFlags.isON(i));
+			System.out.println("      " + fLabels[i] +": " + (RegsFlags.isON(i) ? "Ligado" : "Desligado") );
 		}
 		printfDelim();
 	}

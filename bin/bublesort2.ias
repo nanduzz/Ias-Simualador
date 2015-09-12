@@ -117,7 +117,8 @@
     stor M(7,28:39) 
     stor M(9,8:19) 
     stor M(10,28:39) 
-    
+ 
+laco:
     stor M(11,8:19) 
     add  M(17) 
     stor M(8,8:19) 

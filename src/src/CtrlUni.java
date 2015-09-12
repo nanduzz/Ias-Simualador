@@ -1,6 +1,5 @@
 package src;
 
-//completo com erros
 public class CtrlUni {
 	
 	public static void fetch(){
@@ -10,7 +9,6 @@ public class CtrlUni {
 		RegsFlags.setReg(RegsFlags.MBR, bus);
 	}
 	
-	// se não funcionar trocar parametro para long
 	public static void getOperands(long mar){
 	    if(RegsFlags.isON(RegsFlags.READMEM_FLAG)){  
 	    	RegsFlags.setReg(RegsFlags.MBR, Mem.readMEM(mar));
@@ -31,7 +29,6 @@ public class CtrlUni {
 		RegsFlags.setReg(RegsFlags.MAR,  Util.getADR(reg));
 		RegsFlags.setReg(RegsFlags.PC, RegsFlags.getReg(RegsFlags.PC) + 1);
 	}
-	//teste
 	
 	public static int decodeOp(long ir){
 	    int op = 0;
@@ -41,12 +38,9 @@ public class CtrlUni {
 	        op = Base.N_MBR_AC;      
 	    }else if(ir == 3){
 	        op = Base.A_MBR_AC;      
-	    }
-	    else if(ir == 4){
-	    	op = 4; //#Base.AN_MBR_AC;      
-	    }
-	    else if(ir == 33){
-	    	System.out.println("store");
+	    }else if(ir == 4){
+	    	op = 4; 
+	    }else if(ir == 33){
 	        op = Base.AC_MBR;
 	    }else if(ir == 18){
 	        op = Base.AC_MBR_L;
@@ -81,7 +75,6 @@ public class CtrlUni {
 	    }else if(ir == 16){
 	        op = 13;
 	    }
-	    System.out.println("OP:" + op);
 	    return op;
 	}
 	

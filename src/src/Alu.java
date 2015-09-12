@@ -6,10 +6,7 @@ public class Alu {
 	public static final int HEX = 16;
 	
 	public static long add(long ac, long mbr){
-		System.out.println("soma ac:" +  Long.toString(ac, HEX) + " mbr :" + Long.toString(mbr, HEX) + " = " + Long.toString((ac + mbr), HEX) );
 		long out = Util.toComp2(ac) + Util.toComp2(mbr);
-		System.out.println("resultado " + Long.toString(out, HEX));
-		System.out.println("resultado to mag " + Long.toString(Util.toMag(out), HEX));
 		return Util.toMag(out);
 	}
 	
@@ -98,9 +95,7 @@ public class Alu {
 	
 	public static void alu(int op, long ac, long mbr, long mq){
 		if(op == Base.MBR_AC){
-			System.out.println("carrega mbr :" + Long.toString(mbr, HEX) + " para ac :" + Long.toString(RegsFlags.getReg(RegsFlags.AC), HEX));
 			RegsFlags.setReg(RegsFlags.AC, mbr);
-			System.out.println("Novo valor ac :" + Long.toString(RegsFlags.getReg(RegsFlags.AC), HEX));
 		}
 		else if(op == Base.A_MBR_AC){
 			RegsFlags.setReg(RegsFlags.AC, absolute(mbr));
@@ -108,13 +103,8 @@ public class Alu {
 		else if(op == Base.N_MBR_AC){
 			RegsFlags.setReg(RegsFlags.AC, neg(mbr));
 		}
-//		else if(op == Base.AN_MBR_AC){
-//			RegsFlags.setReg(RegsFlags.AC, negAbs(mbr));
-//		}
 		else if(op == Base.AC_MBR){
-			System.out.println("carrega ac :" + Long.toString(ac, HEX) + " para mbr :" + Long.toString(RegsFlags.getReg(RegsFlags.MBR), HEX));
 			RegsFlags.setReg(RegsFlags.MBR, ac);
-			System.out.println("Novo valor MBR :" + Long.toString(RegsFlags.getReg(RegsFlags.MBR),HEX));
 		}
 		else if(op == Base.AC_MBR_L){
 			RegsFlags.setReg(RegsFlags.MBR, Util.getADR(ac) << 20);

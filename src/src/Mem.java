@@ -26,13 +26,12 @@ public class Mem {
 	}
 	
 	public static long readMEM(long pos){
-		int p = (int) pos; // gambi
+		int p = (int) pos;
 		return mem[p];
 	}
 	
 	public static void writeMEM(long pos, long bus, long mask){
-		int p = (int) pos; // <= gambiarra
-		//System.out.println("POS MEM :" + p);
+		int p = (int) pos;
 		mem[p] = (mask & mem[p]) | bus;
 	}
 }

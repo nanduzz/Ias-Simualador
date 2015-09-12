@@ -6,9 +6,7 @@ import java.io.FileReader;
 
 public class IasSimulador {
 	
-	public static void main(String[] args) {
-//		Scanner scan = new Scanner(System.in);
-		System.out.println("teste");
+	public static void execulta() {
 		String[] linhas = new String[1024];
 		Mem.initMEM(linhas.length);
 		try{
@@ -31,8 +29,7 @@ public class IasSimulador {
 			Mem.loadMEM(linhas);
 		}
 		
-		Ccpu.cpu(0, 200, 0, 10);
-		Util.printfMEM(200, 0, 200);
+		Ccpu.cpu(0, 200, 0, 200);
 		System.out.println("fim");
 	}
 }
