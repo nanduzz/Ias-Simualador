@@ -24,7 +24,7 @@ public class Ccpu {
 		}
 		if(x == 0){
 			Util.printfInstTypesQtts();
-			Util.printfMEM(max, ma, mb);
+			Util.imprimeMemoria(max, ma, mb);
 			Util.printREGS();
 		}
 	}

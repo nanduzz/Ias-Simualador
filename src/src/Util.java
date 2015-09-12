@@ -4,7 +4,7 @@ public class Util {
 	
 	public static int type[] = {0,0,0,0,0};
 	
-	//Data Transfer
+	//Transferencia de dados
 	public static boolean transferenciaDados(long ir){
 		return (ir == 10 ) || ( ir == 9 ) || ( ir == 33 )
 				           || (( ir == 1 ) || ( ir == 4 ) );  
@@ -47,53 +47,53 @@ public class Util {
 		}
 	}
 	
-	public static long getOPL(long word){
-		return (word & Base.OPL) >> 32;
+	public static long getOPL(long palavra){
+		return (palavra & Base.OPL) >> 32;
 	}
 	
-	public static long getOPR(long word){
-		return (word & Base.OPR) >> 12;
+	public static long getOPR(long palavra){
+		return (palavra & Base.OPR) >> 12;
 	}
 	
-	public static long getADL(long word){
-		return (word & Base.ADL) >> 20;
+	public static long getADL(long palavra){
+		return (palavra & Base.ADL) >> 20;
 	}
 	
-	public static long getADR(long word){
-		return (word & Base.ADR);
+	public static long getADR(long palavra){
+		return (palavra & Base.ADR);
 	}
 	
-	public static long getINSTR(long word){
-		return (word & Base.INSTR);
+	public static long getINSTR(long palavra){
+		return (palavra & Base.INSTR);
 	}
 	
-	public static long getMAG(long word){
-		return (word & Base.MAG) >> 39;
+	public static long getMAG(long palavra){
+		return (palavra & Base.MAG) >> 39;
 	}
 	
-	public static long getNUM(long value){
-		return (Base.NUM & value);
+	public static long getNUM(long valor){
+		return (Base.NUM & valor);
 	}
 	
-	public static long toComp2(long word){
-		long num = getNUM(word);
-		if(getMAG(word) == 1){
+	public static long toComp2(long palavra){
+		long num = getNUM(palavra);
+		if(getMAG(palavra) == 1){
 			num = -num;
 		}
 		return num;
 	}
 	public static long toMag(long num){
-		long word;
+		long palavra;
 		if(num < 0){
-			word = -num;
-			word = getNUM(word) | Base.MAG;
+			palavra = -num;
+			palavra = getNUM(palavra) | Base.MAG;
 		}else{
-			word = getNUM(num);
+			palavra = getNUM(num);
 		}
-		return word;
+		return palavra;
 	}
 	
-	public static void printfDelim(){
+	public static void imprimeDelimitador(){
 		System.out.println("-------------------------------------------");
 	}
 	
@@ -105,10 +105,10 @@ public class Util {
 		for(i = 0; i < 5; i++){
 			System.out.println(labels[i] + ": " + type[i]);
 		}
-		printfDelim();
+		imprimeDelimitador();
 	}
 	
-	public static void printfMEM(int max, int b, int e){
+	public static void imprimeMemoria(int max, int b, int e){
 		int i;
 		int mo = 0;
 		int mf = max;
@@ -116,9 +116,8 @@ public class Util {
 		if(e<max){
 			mf = e;
 		}
-		System.out.println("Memory(" + mo + " : " + mf + " )");
+		System.out.println("Memoria(" + mo + " : " + mf + " )");
 		for(i = mo; i <= mf; i++){
-			//TODO Entender linha 121 do GIT para colocar aqui em baixo
 			long mem = Mem.readMEM(i);
 			if( Util.getMAG( mem ) == 1){
 				mem = Util.getNUM(mem);
@@ -126,18 +125,11 @@ public class Util {
 			}
 			System.out.println("     " + i + ": " + Long.toString(mem, 10));
 		}
-		printfDelim();
+		imprimeDelimitador();
 	}
 	
 	public static void printPC(){
 		System.out.println("PC : " + RegsFlags.getReg(RegsFlags.PC));
-	}
-	
-	public static String printONOFF(boolean on){
-		if(on){
-			return "ON";
-		}
-		return "OFF";
 	}
 	
 	public static void printREGS(){
@@ -151,23 +143,6 @@ public class Util {
 		for(i = 0; i < fLabels.length; i++){
 			System.out.println("      " + fLabels[i] +": " + (RegsFlags.isON(i) ? "Ligado" : "Desligado") );
 		}
-		printfDelim();
-	}
-	
-	//TODO fazer essa funcao =)
-	public static void loqeMEM(){
-		
-	}
-	// TODO fazer essa funcao
-	public static void printHelp(){
-		
-	}
-	
-	//TODO terminar essa funcao
-	public static void cpuStatus(int max, int ma, int mb){
-		char c;
-		printPC();
-		System.out.print(" > ");
-		
+		imprimeDelimitador();
 	}
 }

@@ -19,7 +19,7 @@ public class Mem {
 		for (String linha : linhas){
 			if(linha != null){
 				long valor = Long.parseLong(linha, 16);
-				writeMEM(i, valor, 0);
+				escreveMemoria(i, valor, 0);
 			}
 			i++;
 		}
@@ -30,7 +30,7 @@ public class Mem {
 		return mem[p];
 	}
 	
-	public static void writeMEM(long pos, long bus, long mask){
+	public static void escreveMemoria(long pos, long bus, long mask){
 		int p = (int) pos;
 		mem[p] = (mask & mem[p]) | bus;
 	}

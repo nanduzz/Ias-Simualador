@@ -127,7 +127,7 @@ public class CtrlUni {
 	
 	public static void saveResults(long mar, long mbr, long mask){
 		if(RegsFlags.isON(RegsFlags.WRITEMEM_FLAG)){
-			Mem.writeMEM(mar, mbr, mask);
+			Mem.escreveMemoria(mar, mbr, mask);
 			RegsFlags.turnOFF(RegsFlags.WRITEMEM_FLAG);
 		}
 	}

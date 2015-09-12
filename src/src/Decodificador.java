@@ -60,21 +60,38 @@ public class Decodificador {
 	}
 	
 	public void codifica(){
+		
+		separaInstEspecial();
 		MemPos = 0;
 		for(String linha : this.linhas){
 			if(!linhaVazia(linha)){
 				if(hasOrg(linha)){
 					setMemPosOrg(linha);
-					continue;
-				}else if(isPalavraEspacial(linha)){
-					System.out.println("palavra especial");
-					palavrasEspeciais.add(new Pair(MemPos + 1, linha.trim()));
-					continue;
-				}else{
+				}else if(!isPalavraEspacial(linha)){
 					if(modoDados){
 						insereDados(linha);
 					}else{
 						insereInstrucao(linha);
+					}
+				}
+			}
+		}
+	}
+	
+	public void separaInstEspecial(){
+		MemPos = 0;
+		for(String linha : this.linhas){
+			if(!linhaVazia(linha)){
+				if(hasOrg(linha)){
+					setMemPosOrg(linha);
+				}else if(isPalavraEspacial(linha)){
+					System.out.println("palavra especial");
+					palavrasEspeciais.add(new Pair(MemPos + 1, linha.trim(), !instL));
+				}else{
+					if(instL)
+						MemPos++;
+					else{
+						instL = false;
 					}
 				}
 			}
@@ -88,7 +105,7 @@ public class Decodificador {
 		if(l < 0){
 			dados = Long.toString((Long.valueOf("8000000000", 16) | -l));
 		}
-		Mem.writeMEM(MemPos, Long.valueOf(dados.trim()), 0l);
+		Mem.escreveMemoria(MemPos, Long.valueOf(dados.trim()), 0l);
 		MemPos++;
 	}
 	
@@ -123,11 +140,25 @@ public class Decodificador {
 		}else if(op.contains("LOAD |M")){
 			opH = Long.valueOf("11", 2);
 		}else if(op.contains("JUMP M")){
+			
+			for(Pair p : palavrasEspeciais){
+				if(op.contains(p.palavra)){
+					if(p.esq){
+						opH = Long.valueOf("1101", 2);
+					}else{
+						opH = Long.valueOf("1110", 2);
+					}
+					return opH;
+				}
+			}
+			
 			if(op.contains("0:19")){
 				opH = Long.valueOf("1101", 2);
 			}else if( op.contains("20:39")){
 				opH = Long.valueOf("1110", 2);
 			}
+			
+			
 		}else if(op.contains("JUMP+M")){
 			if(op.contains("0:19")){
 				opH = Long.valueOf("1111", 2);
@@ -155,16 +186,29 @@ public class Decodificador {
 	}
 	
 	public Long posMemToHex(String pos){
+		
 		String p[] = new String[2];
+		boolean pEspecial = false;
+		
 		if(pos.contains("(")){
-			if(pos.contains(",")){
-				p = pos.split(",");
-			}else{
-				p[0] = pos;
+			
+			for(Pair pair : palavrasEspeciais){
+				if(pos.contains(pair.palavra)){
+					pEspecial = true;
+					return (long) pair.pos;
+				}
 			}
-			p[0] = p[0].replaceAll("[^0-9]", "");
+			if(!pEspecial){
+				if(pos.contains(",")){
+					p = pos.split(",");
+				}else{
+					p[0] = pos;
+				}
+				p[0] = p[0].replaceAll("[^0-9]", "");
+			}
 			return Long.valueOf(p[0]);
 		}
+		
 		return 0l;
 	}
 	
@@ -173,11 +217,11 @@ public class Decodificador {
 		if(!instL){
 			Instrucao = inst << 20;
 			instL = true;
-			Mem.writeMEM(MemPos, Instrucao, 0);
+			Mem.escreveMemoria(MemPos, Instrucao, 0);
 		}else{
 			Instrucao = Instrucao | inst; 
 			instL = false;
-			Mem.writeMEM(MemPos, Instrucao, 0);
+			Mem.escreveMemoria(MemPos, Instrucao, 0);
 			Instrucao = 0;
 			MemPos++;
 		}
@@ -192,19 +236,19 @@ public class Decodificador {
 		System.out.println("Digite o nome do arquivo :");
 		Scanner scan = new Scanner(System.in);
 		String arquivo = scan.nextLine();
+		scan.close();
 		System.out.println(arquivo);
 		
 		Decodificador d = new Decodificador();
 		d.comeca(arquivo);
 		
-		Util.printfMEM(200, 0, 200);
 		d.escreveArquivo();
 		IasSimulador.execulta();
 	}
 	
 	public void escreveArquivo(){
 		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/ias2.ias"));
+			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/teste.txt"));
 			for(Long l : Mem.mem){
 				bw.append(leftPad(Long.toString(l, 16), 10, '0'));
 				bw.newLine();
@@ -218,8 +262,7 @@ public class Decodificador {
 	private static String padding(int repeat, char padChar)
 			throws IndexOutOfBoundsException {
 		if (repeat < 0) {
-			throw new IndexOutOfBoundsException(
-					"Cannot pad a negative amount: " + repeat);
+			throw new IndexOutOfBoundsException();
 		}
 		final char[] buf = new char[repeat];
 		for (int i = 0; i < buf.length; i++) {
@@ -245,9 +288,11 @@ public class Decodificador {
 	class Pair{
 		String palavra;
 		int pos;
-		public Pair(int pos, String palavra) {
+		boolean esq;
+		public Pair(int pos, String palavra, boolean esq) {
 			this.pos = pos;
-			this.palavra = palavra;
+			this.palavra = palavra.replaceAll(":", "");
+			this.esq = esq;
 		}
 		public int getPos(){
 			return this.pos;

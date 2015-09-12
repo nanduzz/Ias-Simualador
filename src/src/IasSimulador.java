@@ -29,7 +29,7 @@ public class IasSimulador {
 			Mem.loadMEM(linhas);
 		}
 		
-		Ccpu.cpu(0, 200, 0, 200);
+		Ccpu.cpu(0, 1023, 0, 1023);
 		System.out.println("fim");
 	}
 }
