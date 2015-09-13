@@ -1,0 +1,13 @@
+.org 20
+
+    1 
+    5 
+    -3
+
+.org 10
+
+    load M(20) 
+    add M(21)
+    add M(22)
+    sub M(20) 
+    store M(15)

@@ -48,8 +48,12 @@ public class Decodificador {
 				i++;
 			}while(linha != null);
 			arq.close();
-		}catch (Exception e) {
-			e.printStackTrace();
+		}catch (NullPointerException e) {
+			//e.printStackTrace();
+			System.out.println("Arquivo Não encontrado - Cancelando Execução");	
+			System.exit(0);
+		}catch(Exception e){
+			
 		}
 	}
 	
@@ -65,6 +69,9 @@ public class Decodificador {
 			if(!linhaVazia(linha)){
 				if(hasOrg(linha)){
 					setMemPosOrg(linha);
+					if( RegsFlags.getReg(RegsFlags.PC) == 0 && !modoDados){
+						RegsFlags.setReg(RegsFlags.PC, MemPos);
+					}
 				}else if(!isPalavraEspacial(linha)){
 					if(modoDados){
 						insereDados(linha);
