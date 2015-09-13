@@ -109,36 +109,47 @@
 
     load M(17) 
     stor M(18)
+laco:
     load M(19)
     sub M(21)
+    
     jump+M(14,20:39) 
     load M(19)
+    
     add  M(20)
-    stor M(7,28:39) 
+    stor M(7,28:39)
+     
     stor M(9,8:19) 
     stor M(10,28:39) 
  
     stor M(11,8:19) 
     add  M(17) 
+    
     stor M(8,8:19) 
     stor M((9,28:39) 
+    
     stor M((10,8:19) 
     load M(1) 
+    
     sub M(0) 
-    jump+M(marmita) 
+    jump+M(marmita)
+    
     store M(1) 
     add M(0) 
 
     stor M(0) 
     sub  M(1)
+    
     stor M(1)
-     
-marmita:
     load M(21) 
-    stor M(18) 
+
+marmita:     
+    stor M(18)
     load M(19) 
+    
     sub  M(17) 
     stor M(19)
+    
     jump M(1,0:19) 
     load |M(17)| 
     

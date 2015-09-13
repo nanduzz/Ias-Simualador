@@ -116,6 +116,9 @@ public class Util {
 		if(e<max){
 			mf = e;
 		}
+		if(b > 0 && b < max){
+			mo = b;
+		}
 		System.out.println("Memoria(" + mo + " : " + mf + " )");
 		for(i = mo; i <= mf; i++){
 			long mem = Mem.readMEM(i);

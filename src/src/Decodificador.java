@@ -1,10 +1,8 @@
 package src;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -39,7 +37,7 @@ public class Decodificador {
 		this.linhas = new String[1024];
 		Mem.initMEM(this.linhas.length);
 		try{
-			ClassLoader classLoader = IasSimulador.class.getClassLoader();
+			ClassLoader classLoader = Decodificador.class.getClassLoader();
 			FileReader arq = new FileReader(new File(classLoader.getResource(filePath).getFile()));
 			BufferedReader lerArq = new BufferedReader(arq);
 			int i = 0;
@@ -60,8 +58,8 @@ public class Decodificador {
 	}
 	
 	public void codifica(){
-		
 		separaInstEspecial();
+		instL = false;
 		MemPos = 0;
 		for(String linha : this.linhas){
 			if(!linhaVazia(linha)){
@@ -85,13 +83,14 @@ public class Decodificador {
 				if(hasOrg(linha)){
 					setMemPosOrg(linha);
 				}else if(isPalavraEspacial(linha)){
-					System.out.println("palavra especial");
-					palavrasEspeciais.add(new Pair(MemPos + 1, linha.trim(), !instL));
+					palavrasEspeciais.add(new Pair(MemPos, linha.trim(), !instL));
 				}else{
-					if(instL)
+					if(instL){
 						MemPos++;
-					else{
 						instL = false;
+					}
+					else{
+						instL = true;
 					}
 				}
 			}
@@ -140,9 +139,8 @@ public class Decodificador {
 		}else if(op.contains("LOAD |M")){
 			opH = Long.valueOf("11", 2);
 		}else if(op.contains("JUMP M")){
-			
 			for(Pair p : palavrasEspeciais){
-				if(op.contains(p.palavra)){
+				if(op.contains(p.palavra.toUpperCase())){
 					if(p.esq){
 						opH = Long.valueOf("1101", 2);
 					}else{
@@ -160,6 +158,17 @@ public class Decodificador {
 			
 			
 		}else if(op.contains("JUMP+M")){
+			for(Pair p : palavrasEspeciais){
+				if(op.contains(p.palavra.toUpperCase())){
+					if(p.esq){
+						opH = Long.valueOf("1111", 2);
+					}else{
+						opH = Long.valueOf("10000", 2);
+					}
+					return opH;
+				}
+			}
+			
 			if(op.contains("0:19")){
 				opH = Long.valueOf("1111", 2);
 			}else if( op.contains("20:39")){
@@ -236,27 +245,31 @@ public class Decodificador {
 		System.out.println("Digite o nome do arquivo :");
 		Scanner scan = new Scanner(System.in);
 		String arquivo = scan.nextLine();
+		int ini, fini;
+		ini = fini = 0;
+		System.out.println("Minimo = 0, Maximo = 1023");
+		do{
+			System.out.println("Digite o enreco inicial da memoria! [0] para tudo");
+			ini = scan.nextInt();
+			System.out.println("Digite o endereço final da memoria! [0] para tudo ");
+			fini = scan.nextInt();
+		} while(fini < ini );
+		
+		if( (ini < 0 || ini > 1023 )|| (fini < 0 || fini > 1023 ) ){
+			ini = 0;
+			fini = 1023;
+		}
 		scan.close();
-		System.out.println(arquivo);
 		
 		Decodificador d = new Decodificador();
 		d.comeca(arquivo);
-		
-		d.escreveArquivo();
-		IasSimulador.execulta();
+		Util.imprimeDelimitador();
+		d.executa(ini, fini);
 	}
 	
-	public void escreveArquivo(){
-		try{
-			BufferedWriter bw = new BufferedWriter(new FileWriter("Resources/teste.txt"));
-			for(Long l : Mem.mem){
-				bw.append(leftPad(Long.toString(l, 16), 10, '0'));
-				bw.newLine();
-			}
-			bw.close();
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+	public void executa(int posIni, int posFinal){
+		Ccpu.cpu(0, 1023, posIni, posFinal);
+		System.out.println("fim");
 	}
 	
 	private static String padding(int repeat, char padChar)
